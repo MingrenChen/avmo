@@ -15,7 +15,7 @@ class AvmoPipeline(object):
         self.items = set()
         self.f = open("avmo.pickle", "wb")
         self.f1 = open("avmo.out", "w")
-        self.f2 = open('avmo.json','wb')
+        self.f2 = open('avmo.json', 'wb')
 
     def process_item(self, item, spider):
         # print(item["pic"])
@@ -31,7 +31,7 @@ class AvmoPipeline(object):
         print(len(self.items))
         self.f.close()
         self.f1.close()
-
+        self.f2.close()
 
 
 # class ImgPipeline(ImagesPipeline):
