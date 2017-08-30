@@ -65,9 +65,10 @@ DEFAULT_REQUEST_HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Linux'
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'avmo.pipelines.AvmoPipeline': 300,
-   #  'avmo.pipelines.ImgPipeline': 400
+    # 'avmo.pipelines.ImgPipeline': 400
 }
-
+IMAGES_STORE='./pic'
+# DOWNLOAD_DELAY = 0.25
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True

@@ -5,44 +5,40 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-import dill
-import json
 
+import json
+from scrapy.utils.misc import md5sum
+from scrapy.pipelines.images import ImagesPipeline
+import scrapy
 
 class AvmoPipeline(object):
 
     def __init__(self):
-        self.items = set()
-        self.f = open("avmo.pickle", "wb")
-        self.f1 = open("avmo.out", "w")
         self.f2 = open('avmo.json', 'wb')
 
     def process_item(self, item, spider):
         # print(item["pic"])
-        self.f1.write(str(item))
         content = json.dumps(dict(item), ensure_ascii=False)
         self.f2.write(content.encode("utf-8"))
         return item
-        # self.items.add(check.Av(item['url'],item['pic'],item['name'],item['id_']))
 
-
-    def close_spider(self,spider):
-        dill.dump(self.items, self.f)
-        print(len(self.items))
-        self.f.close()
-        self.f1.close()
+    def close_spider(self, spider):
         self.f2.close()
 
 
 # class ImgPipeline(ImagesPipeline):
 #     def get_media_requests(self, item, info):
 #         img_url = item["pic"]
-#         yield scrapy.Request("http:" + img_url)
+#         self.citem = item
+#         yield scrapy.Request(img_url)
 #
 #     def item_completed(self, results, item, info):
 #         return item
-
-    # def file_path(self, request, response=None, info=None):
-    #     item = request.meta['item']
-    #     filename = '{} {}.jpg'.format(item['id_'], item['name'])
-    #     return filename
+#
+#     def image_key(self, url):
+#         name = self.citem['id_'] + " " + self.citem['name']
+#         if len(name) < 80:
+#             image_guid = name
+#         else:
+#             image_guid = self.citem['id_']
+#         return 'full/%s' % (image_guid)

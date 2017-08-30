@@ -30,7 +30,7 @@ class JavbusSpider(scrapy.Spider):
 
         id_ = re.search("[a-zA-Z]{2,5}-?\d{2,5}",title).group(0)
         name = title[len(id_)+1:]
-        pic = "http" + response.xpath("//*[@id=\"video_jacket_img\"]/@src").extract()[0]
+        pic = "http:" + response.xpath("//*[@id=\"video_jacket_img\"]/@src").extract()[0]
 
         item["url"] = response.url
         item["id_"] = id_
