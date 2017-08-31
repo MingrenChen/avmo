@@ -52,13 +52,6 @@ class Av:
             Avqueue.checkmax(self.id_ + " " + self.name + ".jpg")
             urllib.request.urlretrieve(self.pic, os.path.join("./img", self.id_ + ".jpg"))
 
-    def find_mag(self):
-        url = urllib.parse.urljoin("https://btso.pw/search/", self.id_)
-        req = urllib.request.urlopen(url)
-        response = req.read()
-        a = response.xpath("//div[@class=\"data-list\"]").extract()
-        return req
-
     def __repr__(self):
         return self.id_
 
