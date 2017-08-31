@@ -14,3 +14,8 @@ class AvmoItem(scrapy.Item):
     pic = scrapy.Field()
     url = scrapy.Field()
     id_ = scrapy.Field()
+
+class MagnetItem(scrapy.Item):
+    id_ = scrapy.Field()
+    magnet = scrapy.Field()
+    title = scrapy.Field()

@@ -2,7 +2,8 @@ import re, pickle
 import json
 import urllib.request
 import os.path
-
+import urllib.parse
+from scrapy.cmdline import execute
 
 class Av_Queue:
     def __init__(self):
@@ -15,7 +16,10 @@ class Av_Queue:
         else:
             pass
 
-    def checkmax(self,string):
+    def get_random(self):
+        return list(self.set)[0]
+
+    def checkmax(self, string):
         if not self.minmax:
             self.minmax = len(string)
         elif self.minmax > len(string):
@@ -25,6 +29,13 @@ class Av_Queue:
         for av_ in self.set:
             av_.download_pic(self)
 
+    def create_url_book(self):
+        with open("./spiders/urls.txt","w") as d:
+            for av_ in self.set:
+                d.write(urllib.parse.urljoin("https://btso.pw/search/", av_.id_))
+                d.write("\n")
+        d.close()
+
 
 class Av:
     def __init__(self, name, id_, url, pic):
@@ -32,6 +43,7 @@ class Av:
         self.id_ = id_
         self.url = url
         self.pic = pic
+        self.mag = None
 
     def download_pic(self, Avqueue):
         try:
@@ -40,6 +52,13 @@ class Av:
             Avqueue.checkmax(self.id_ + " " + self.name + ".jpg")
             urllib.request.urlretrieve(self.pic, os.path.join("./img", self.id_ + ".jpg"))
 
+    def find_mag(self):
+        url = urllib.parse.urljoin("https://btso.pw/search/", self.id_)
+        req = urllib.request.urlopen(url)
+        response = req.read()
+        a = response.xpath("//div[@class=\"data-list\"]").extract()
+        return req
+
     def __repr__(self):
         return self.id_
 
@@ -47,6 +66,7 @@ class Av:
         return hash(self.__repr__())
 
 if __name__ == "__main__":
+    execute(['scrapy', 'crawl', 'avmoo'])
     with open("avmo.json") as data_file:
         all_av = data_file.readline()
         pattern = re.compile("{.+?}")
@@ -55,11 +75,16 @@ if __name__ == "__main__":
             single_av = json.loads(i)
             av = Av(single_av['name'], single_av['id_'], single_av['url'], single_av['pic'])
             all_.append(av)
-        all_.download()
+    #     all_.download()
 
-
+    execute(['scrapy', 'crawl', 'btso'])
     with open("avmo.pickle","wb") as p:
         pickle.dump(all_, p)
     p.close()
     data_file.close()
-    print(all_.minmax)
+
+    with open("avmo.pickle","rb") as p:
+        avs = pickle.load(p)
+    avs.create_url_book()
+    p.close()
+

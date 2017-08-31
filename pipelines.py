@@ -26,6 +26,14 @@ class AvmoPipeline(object):
         self.f2.close()
 
 
+class BtsoPipeline(object):
+    def process_item(self,item,spider):
+        id_ = item['id_']
+        with open(r"/home/mingren/project/avmo/avmo/img/" + id_ + ".txt", 'a') as f:
+            f.write(item['title'] + '\n')
+            f.write(item['magnet'] + '\n')
+        return item
+
 # class ImgPipeline(ImagesPipeline):
 #     def get_media_requests(self, item, info):
 #         img_url = item["pic"]
