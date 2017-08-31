@@ -69,7 +69,7 @@ ITEM_PIPELINES = {
     # 'avmo.pipelines.ImgPipeline': 400
 }
 IMAGES_STORE = './pic'
-DOWNLOAD_DELAY = 0.25
+DOWNLOAD_DELAY = 1
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
