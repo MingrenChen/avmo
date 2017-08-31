@@ -59,7 +59,7 @@ class Av:
         return hash(self.__repr__())
 
 if __name__ == "__main__":
-    execute(['scrapy', 'crawl', 'avmoo'])
+    execute(['scrapy', 'crawl', 'javlibrary'])
     with open("avmo.json") as data_file:
         all_av = data_file.readline()
         pattern = re.compile("{.+?}")

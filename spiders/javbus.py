@@ -9,7 +9,7 @@ import items
 
 
 class JavbusSpider(scrapy.Spider):
-    name = 'avmoo'
+    name = 'javlibrary'
     allowed_domains = ['www.ja14b.com']
     start_urls = ['http://www.ja14b.com/cn/vl_genre.php?g=cu']
 
