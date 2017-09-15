@@ -22,6 +22,7 @@ class BtsoSpider(scrapy.Spider):
             for each in response.xpath("//div[@class=\"data-list\"]/div[@class=\"row\"]"):
                 url = each.xpath("a/@href").extract()[0]
                 yield scrapy.Request(url, callback=self.parse_magnet)
+                break
 
     def parse_magnet(self,response):
         title = response.xpath("/html/body/div[2]/h3/text()").extract()[0]
